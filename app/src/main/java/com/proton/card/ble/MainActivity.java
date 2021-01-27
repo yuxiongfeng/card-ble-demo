@@ -1,13 +1,12 @@
-package com.proton.patch.ble;
+package com.proton.card.ble;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 
-import com.proton.ecgpatch.connector.EcgPatchManager;
-import com.proton.ecgpatch.connector.callback.DataListener;
-import com.wms.ble.bean.ScanResult;
+import com.proton.ecgcard.connector.EcgCardManager;
+import com.proton.ecgcard.connector.callback.DataListener;
 import com.wms.ble.callback.OnConnectListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,16 +22,16 @@ public class MainActivity extends AppCompatActivity {
         PermissionUtils.getLocationPermission(this);
 
         findViewById(android.R.id.content).setOnClickListener(v -> {
-            testPatchConnect();
+            testCardConnect();
         });
     }
 
-    private void testPatchConnect() {
-        EcgPatchManager.init(this);
-        EcgPatchManager ecgPatchManager = EcgPatchManager.getInstance("C4:A1:1B:19:BB:C7");
-        ecgPatchManager.setDataListener(new DataListener() {
+    private void testCardConnect() {
+        EcgCardManager.init(this);
+        EcgCardManager ecgCardManager = EcgCardManager.getInstance("0C:61:CF:C7:E3:C8");
+        ecgCardManager.setDataListener(new DataListener() {
             @Override
-            public void receiveBluetoothData(byte[] data) {
+            public void receiveEcgRawData(byte[] data) {
                 Log.e(TAG, "蓝牙数据:" + data.length);
             }
 
@@ -42,11 +41,27 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void receiveFallDown(boolean isFallDown) {
-                Log.e(TAG, "是否跌倒: " + isFallDown);
+            public void receiveHardVersion(String version) {
+                Log.e(TAG, "固件版本: " + version);
+            }
+
+            @Override
+            public void receiveBattery(Integer battery) {
+                Log.e(TAG, "电量: " + battery);
+            }
+
+            @Override
+            public void receiveSerial(String serial) {
+                Log.e(TAG, "序列号: " + serial);
+            }
+
+            @Override
+            public void receiveTouchMode(int mode) {
+                //0 未双手触摸，1双手触摸
+                Log.e(TAG, "触摸模式: " + mode);
             }
         });
-        ecgPatchManager.connectEcgPatch(new OnConnectListener() {
+        ecgCardManager.connectEcgCard(new OnConnectListener() {
             @Override
             public void onConnectSuccess() {
                 Log.e(TAG, "连接成功");

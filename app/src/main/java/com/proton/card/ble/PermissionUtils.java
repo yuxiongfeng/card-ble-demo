@@ -1,4 +1,4 @@
-package com.proton.patch.ble;
+package com.proton.card.ble;
 
 import android.Manifest;
 import android.app.Activity;

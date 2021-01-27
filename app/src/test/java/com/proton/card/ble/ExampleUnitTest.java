@@ -1,4 +1,4 @@
-package com.proton.patch.ble;
+package com.proton.card.ble;
 
 import org.junit.Test;
 
