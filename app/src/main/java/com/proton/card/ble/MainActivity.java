@@ -17,8 +17,8 @@ import com.wms.ble.callback.OnScanListener;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity--->";
-    public static final String localFirmwareFilePath = "/storage/emulated/0/Android/data/com.proton.carepatchecg/files/fireware/5/V1.0.3";
-    public static final String updateMac = "D0:2E:AB:62:4C:B8";
+    public static final String localFirmwareFilePath = "你的本地固件地址";
+    public static final String updateMac = "你的心电卡mac";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
